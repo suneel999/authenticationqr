@@ -10,7 +10,7 @@
     {% if qr_img_b64 %}
         <h2>Generated QR Code:</h2>
         <img src="data:image/png;base64,{{ qr_img_b64 }}" alt="QR Code">
-        <form method="POST" action="{{ url_for('download_qr') }}">
+        <form method="POST" action="{{ url_for('main.download_qr') }}">
             <input type="hidden" name="qr_data" value="{{ qr_data }}">
             <button type="submit">Download QR Code</button>
         </form>
