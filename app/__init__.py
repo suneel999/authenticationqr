@@ -16,8 +16,7 @@ def create_app():
     login_manager.init_app(app)
 
     # Configure LoginManager
-    login_manager.login_view = 'auth.login'  # Set the login view
-    login_manager.login_message_category = 'info'  # Optional: Set a message category for flashed messages
+    login_manager.login_view = 'auth.login'
 
     # Import and register Blueprints
     from app.routes import main_routes, auth_routes
@@ -25,3 +24,6 @@ def create_app():
     app.register_blueprint(auth_routes)
 
     return app
+
+# Create the app object
+app = create_app()
