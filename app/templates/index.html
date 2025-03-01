@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>QR Code Generator</h1>
+    <form method="POST" action="">
+        <label for="qr_data">Enter Data:</label>
+        <input type="text" id="qr_data" name="qr_data" required>
+        <button type="submit">Generate QR Code</button>
+    </form>
+
+    {% if qr_img_b64 %}
+        <h2>Generated QR Code:</h2>
+        <img src="data:image/png;base64,{{ qr_img_b64 }}" alt="QR Code">
+        <form method="POST" action="{{ url_for('download_qr') }}">
+            <input type="hidden" name="qr_data" value="{{ qr_data }}">
+            <button type="submit">Download QR Code</button>
+        </form>
+    {% endif %}
+{% endblock %}
