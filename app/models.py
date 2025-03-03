@@ -1,7 +1,7 @@
 from datetime import datetime
 from app import db, login_manager
 from flask_login import UserMixin
-import pytz  # Import pytz for timezone handling
+import pytz  
 
 class User(db.Model, UserMixin):  # Inherit from UserMixin
     id = db.Column(db.Integer, primary_key=True)
