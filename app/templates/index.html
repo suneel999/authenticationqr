@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>QR Code Generator</h1>
-    <form method="POST" action="">
-        <label for="qr_data">Enter Data:</label>
-        <input type="text" id="qr_data" name="qr_data" required>
-        <button type="submit">Generate QR Code</button>
-    </form>
+    <div class="card shadow">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">QR Code Generator</h1>
+            <form method="POST" action="" class="mb-4">
+                <div class="mb-3">
+                    <label for="qr_data" class="form-label">Enter Data:</label>
+                    <input type="text" id="qr_data" name="qr_data" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Generate QR Code</button>
+            </form>
 
-    {% if qr_img_b64 %}
-        <h2>Generated QR Code:</h2>
-        <img src="data:image/png;base64,{{ qr_img_b64 }}" alt="QR Code">
-        <form method="POST" action="{{ url_for('main.download_qr') }}">
-            <input type="hidden" name="qr_data" value="{{ qr_data }}">
-            <button type="submit">Download QR Code</button>
-        </form>
-    {% endif %}
+            {% if qr_img_b64 %}
+                <h2 class="text-center mb-3">Generated QR Code:</h2>
+                <div class="text-center">
+                    <img src="data:image/png;base64,{{ qr_img_b64 }}" alt="QR Code" class="img-fluid mb-3">
+                    <form method="POST" action="{{ url_for('main.download_qr') }}">
+                        <input type="hidden" name="qr_data" value="{{ qr_data }}">
+                        <button type="submit" class="btn btn-success w-100">Download QR Code</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
