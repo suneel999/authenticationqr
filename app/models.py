@@ -1,6 +1,7 @@
 from datetime import datetime
 from app import db, login_manager
 from flask_login import UserMixin
+import pytz
 
 class User(db.Model, UserMixin):  # Inherit from UserMixin
     id = db.Column(db.Integer, primary_key=True)
@@ -16,11 +17,17 @@ class QRLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(500), nullable=False)
     qr_image = db.Column(db.String(500), nullable=False)
-    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # UTC time
 
     def __repr__(self):
         return f"QRLog('{self.data}', '{self.timestamp}')"
+
+    # Add the get_ist_timestamp method here
+    def get_ist_timestamp(self):
+        utc_time = self.timestamp
+        ist_timezone = pytz.timezone('Asia/Kolkata')
+        ist_time = utc_time.replace(tzinfo=pytz.utc).astimezone(ist_timezone)
+        return ist_time.strftime('%Y-%m-%d %H:%M:%S')
 
 # User loader function
 @login_manager.user_loader
