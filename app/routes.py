@@ -75,10 +75,13 @@ def download_qr():
 @main_routes.route('/logs')
 @login_required
 def logs():
-    # Fetch all QR logs for the current user
-    user_logs = QRLog.query.filter_by(user_id=current_user.id).order_by(QRLog.timestamp.desc()).all()
-    return render_template('logs.html', logs=user_logs)
-
+    if current_user.is_admin:
+        # Admin can see all logs
+        user_logs = QRLog.query.order_by(QRLog.timestamp.desc()).all()
+    else:
+        # Regular users can only see their logs
+        user_logs = QRLog.query.filter_by(user_id=current_user.id).order_by(QRLog.timestamp.desc()).all()
+    return render_template('logs.html', logs=user_logs, is_admin=current_user.is_admin)
 # Auth routes
 @auth_routes.route('/register', methods=['GET', 'POST'])
 def register():
