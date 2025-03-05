@@ -6,6 +6,9 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        {% if is_admin %}
+                            <th>Username</th>
+                        {% endif %}
                         <th>Timestamp (IST)</th>
                         <th>Data</th>
                         <th>QR Code</th>
@@ -14,7 +17,10 @@
                 <tbody>
                     {% for log in logs %}
                         <tr>
-                            <td>{{ log.get_ist_timestamp() }}</td>  <!-- Call get_ist_timestamp() -->
+                            {% if is_admin %}
+                                <td>{{ log.user.username }}</td>  <!-- Display username for admin -->
+                            {% endif %}
+                            <td>{{ log.get_ist_timestamp() }}</td>
                             <td>{{ log.data }}</td>
                             <td><img src="data:image/png;base64,{{ log.qr_image }}" alt="QR Code" class="img-fluid" style="max-width: 100px;"></td>
                         </tr>
