@@ -6,9 +6,7 @@ from app import db
 from app.models import QRLog
 
 def generate_qr_code(qr_data, user_id):
-    """
-    Generate a QR code and log it in the database.
-    """
+  
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -33,9 +31,7 @@ def generate_qr_code(qr_data, user_id):
     return qr_img_b64
 
 def download_qr_code(qr_data):
-    """
-    Generate a QR code and return it as a downloadable file.
-    """
+    
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -52,7 +48,5 @@ def download_qr_code(qr_data):
     return img_io
 
 def get_user_qr_logs(user_id):
-    """
-    Fetch all QR logs for a specific user.
-    """
+    
     return QRLog.query.filter_by(user_id=user_id).order_by(QRLog.timestamp.desc()).all()
